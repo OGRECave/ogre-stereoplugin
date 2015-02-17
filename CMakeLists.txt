@@ -10,14 +10,8 @@
 cmake_minimum_required(VERSION 2.8)
 
 # Find Ogre
-# REMOVE IF ITS ADDED TO OGRE 
-set(OGRE_DIR /igd/a4/home/baudenri/ogreInstallation/1.10/src)
-set(OGRE_INSTALL_PATH /igd/a4/home/baudenri/ogreInstallation/1.10/install CACHE PATH "where ogre is installed")
 set(CMAKE_PREFIX_PATH ${OGRE_INSTALL_PATH})
-set(OGRE_CMAKE_DIR ${OGRE_INSTALL_PATH}/lib/OGRE/cmake/)
-set(CMAKE_MODULE_PATH  ${OGRE_CMAKE_DIR})
-
-
+set(CMAKE_MODULE_PATH  ${OGRE_INSTALL_PATH}/lib/OGRE/cmake/)
 find_package(OGRE QUIET REQUIRED)
 
 
@@ -54,11 +48,7 @@ file(GLOB RESOURCE_FILES
 
 
 # Install files
-install(FILES ${RESOURCE_FILES} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/install)
-install(FILES ${HEADER_FILES} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/install)
-install(TARGETS Plugin_StereoManager DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/install)
-
-#install(FILES ${RESOURCE_FILES} DESTINATION ${OGRE_INSTALL_PATH}/share/OGRE/Media/materials/scripts)
-#install(FILES ${HEADER_FILES} DESTINATION ${OGRE_INSTALL_PATH}/include/OGRE/Plugins/StereoManager)
-#install(TARGETS Plugin_StereoManager DESTINATION ${OGRE_INSTALL_PATH}/lib/OGRE/)
+install(FILES ${RESOURCE_FILES} DESTINATION ${OGRE_INSTALL_PATH}/share/OGRE/Media/materials/scripts)
+install(FILES ${HEADER_FILES} DESTINATION ${OGRE_INSTALL_PATH}/include/OGRE/Plugins/StereoManager)
+install(TARGETS Plugin_StereoManager DESTINATION ${OGRE_INSTALL_PATH}/lib/OGRE/)
 message("You have to create a link to Plugin_StereoManager.so.${OGRE_VERSION_MAJOR}.${OGRE_VERSION_MINOR}.${OGRE_VERSION_PATCH} at ${OGRE_INSTALL_PATH}/lib/OGRE/")
