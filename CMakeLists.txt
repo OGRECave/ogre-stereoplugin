@@ -11,9 +11,9 @@ cmake_minimum_required(VERSION 2.8)
 
 # Find Ogre
 set(CMAKE_PREFIX_PATH ${OGRE_INSTALL_PATH})
+set(CMAKE_FIND_ROOT_PATH ${OGRE_INSTALL_PATH} "${CMAKE_FIND_ROOT_PATH}")
 set(CMAKE_MODULE_PATH  ${OGRE_INSTALL_PATH}/lib/OGRE/cmake/)
 find_package(OGRE QUIET REQUIRED)
-
 
 # Configure StereoManager build
 file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
@@ -22,7 +22,7 @@ file(GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${OGRE_INCLUDE_DIRS})
 add_definitions(-D_USRDLL)
 
-add_library(Plugin_StereoManager SHARED ${HEADER_FILES} ${SOURCE_FILES})
+add_library(Plugin_StereoManager ${OGRE_LIB_TYPE} ${HEADER_FILES} ${SOURCE_FILES})
 
 target_link_libraries(Plugin_StereoManager ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 if (NOT OGRE_STATIC)
@@ -36,7 +36,7 @@ endif ()
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
       # disable "lib" prefix on Unix
       set_target_properties(Plugin_StereoManager PROPERTIES PREFIX "")
-      set_target_properties(Plugin_StereoManager PROPERTIES SUFFIX ".so.${OGRE_VERSION_MAJOR}.${OGRE_VERSION_MINOR}.${OGRE_VERSION_PATCH}")
+      set_target_properties(Plugin_StereoManager PROPERTIES SUFFIX ".so.${OGRE_VERSION}")
 endif (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
 
@@ -51,4 +51,3 @@ file(GLOB RESOURCE_FILES
 install(FILES ${RESOURCE_FILES} DESTINATION ${OGRE_INSTALL_PATH}/share/OGRE/Media/materials/scripts)
 install(FILES ${HEADER_FILES} DESTINATION ${OGRE_INSTALL_PATH}/include/OGRE/Plugins/StereoManager)
 install(TARGETS Plugin_StereoManager DESTINATION ${OGRE_INSTALL_PATH}/lib/OGRE/)
-message("You have to create a link to Plugin_StereoManager.so.${OGRE_VERSION_MAJOR}.${OGRE_VERSION_MINOR}.${OGRE_VERSION_PATCH} at ${OGRE_INSTALL_PATH}/lib/OGRE/")
