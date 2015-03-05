@@ -34,10 +34,13 @@ endif ()
 
 # Modify Plugin Name
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-      # disable "lib" prefix on Unix
-      set_target_properties(Plugin_StereoManager PROPERTIES PREFIX "")
-      set_target_properties(Plugin_StereoManager PROPERTIES SUFFIX ".so.${OGRE_VERSION}")
-endif (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  # disable "lib" prefix on Unix
+  set_target_properties(Plugin_StereoManager PROPERTIES PREFIX "")
+  
+  if(NOT OGRE_STATIC)
+    set_target_properties(Plugin_StereoManager PROPERTIES SUFFIX ".so.${OGRE_VERSION}")
+  endif()
+endif()
 
 
 # Add additional install files
