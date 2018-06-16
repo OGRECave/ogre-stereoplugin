@@ -5,14 +5,3 @@ For installation of the StereoManager Plugin
 2. Add 
    `Plugin=Plugin_StereoManager`
    into the plugin.cfg. Enable Plugin_CgProgramManager for anaglyph and/ or interlaced rendering.
-
-External Project 
-----------------
-```
-include(ExternalProject)
-ExternalProject_Add(StereoManager
-	GIT_REPOSITORY https://bitbucket.org/baudenri/ogrestereoplugin.git
-	CMAKE_ARGS 
-		-DOGRE_INSTALL_PATH=${OGRE_INSTALL_PATH}
-)
-```
