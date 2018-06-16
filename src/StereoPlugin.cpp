@@ -156,18 +156,12 @@ bool StereoPlugin::frameStarted(const FrameEvent& evt)
 				// try to load the config file
 				mStereoManager.init(viewport, viewport2, mode);
 			}
-			catch(Exception e)
+			catch(const FileNotFoundException& e)
 			{
-				// if the config file is not found, it throws an exception
-				if(e.getNumber() == Exception::ERR_FILE_NOT_FOUND)
-				{
-					// init the manager with defaults parameters
-					mStereoManager.init(viewport, NULL, StereoManager::SM_ANAGLYPH_RC);
-					// and generate a default config file
-					mStereoManager.saveConfig("stereo.cfg");
-				}
-				else
-					throw e;
+				// init the manager with defaults parameters
+				mStereoManager.init(viewport, NULL, StereoManager::SM_ANAGLYPH_RC);
+				// and generate a default config file
+				mStereoManager.saveConfig("stereo.cfg");
 			}		
 
 			while(!renderTextureList.empty())

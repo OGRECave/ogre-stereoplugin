@@ -282,12 +282,12 @@ void StereoManager::initCompositor(Viewport *viewport,
 	MaterialPtr mat =
 			static_cast<MaterialPtr>(MaterialManager::getSingleton().getByName(
 					materialName));
-	if (mat.isNull())
+	if (!mat)
 		OGRE_EXCEPT(Exception::ERR_INTERNAL_ERROR,
 				materialName + " not found, missing StereoManager resources",
 				"StereoManager::initCompositor");
 
-	mCompositorInstance->getTechnique()->getOutputTargetPass()->getPass(0)->setMaterial(
+	mCompositorInstance->getTechnique()->getOutputTargetPass()->getPasses()[0]->setMaterial(
 			mat);
 	out_left = mCompositorInstance->getRenderTarget("Stereo/Left")->getViewport(
 			0);
